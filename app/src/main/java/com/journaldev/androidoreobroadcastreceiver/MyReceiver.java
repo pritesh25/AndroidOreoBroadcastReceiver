@@ -3,6 +3,7 @@ package com.journaldev.androidoreobroadcastreceiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -28,16 +29,26 @@ public class MyReceiver extends BroadcastReceiver {
         Log.d(TAG,"scheme       = "+scheme);
         Log.d(TAG,"type         = "+type);
 
+        intent = new Intent("speedExceeded");
+
+       // context.sendLocationBroadcast(intent);
+
         if (action.equals("com.journaldev.AN_INTENT")) {
             Toast.makeText(context, "Button Intent Trigger", Toast.LENGTH_SHORT).show();
         }
 
         if (("android.net.conn.CONNECTIVITY_CHANGE").equals(action)) {
-            Toast.makeText(context, "Connectivity Change", Toast.LENGTH_SHORT).show();
+           //Toast.makeText(context, "Connectivity Change", Toast.LENGTH_SHORT).show();
+
+            intent.putExtra("caller","Connectivity Change1");
+          //  LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+
         }
 
         if ((Intent.ACTION_BATTERY_LOW).equals(action)) {
-            Toast.makeText(context, "Battery Low", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(context, "Battery Low", Toast.LENGTH_SHORT).show();
+
+            intent.putExtra("battery","Battery Low1");
         }
 
         if ((Intent.ACTION_PACKAGE_ADDED).equals(action)) {
@@ -47,5 +58,13 @@ public class MyReceiver extends BroadcastReceiver {
         if ((Intent.ACTION_PACKAGE_REMOVED).equals(action)) {
             Toast.makeText(context, "package remove", Toast.LENGTH_SHORT).show();
         }
+
+        sendBroadcastActivity(intent,context);
+
+    }
+
+
+    private void sendBroadcastActivity(Intent intent,Context context){
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 }
