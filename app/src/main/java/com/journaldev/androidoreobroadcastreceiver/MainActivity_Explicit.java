@@ -31,7 +31,6 @@ public class MainActivity_Explicit extends AppCompatActivity implements View.OnC
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("speedExceeded"));
 
-
         IntentFilter filter = new IntentFilter(MyReceiver.class.getName());
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         registerReceiver(myReceiver, filter);
